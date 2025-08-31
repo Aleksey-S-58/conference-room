@@ -1,0 +1,9 @@
+spring:
+  data.jdbc.dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: "jdbc:postgresql://localhost/conference"
+    username: "conference_admin"
+    password: "conference_admin_password"
+    driver-class-name: org.postgresql.Driver
+conference.room:
+  password: "conference-room"

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns = "http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation= "http://maven.apache.org/POM/4.0.0 
+    http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.gmail.ascanada52</groupId>
+    <artifactId>conference-room</artifactId>
+    <version>1.0.0</version>
+    <name>conference-room</name>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <logback.version>1.5.0</logback.version>
+        <slf4j.version>2.0.0</slf4j.version>
+        <spring.boot.version>2.7.18</spring.boot.version>
+        <!-- Database, don't forget to change url, username, password -->
+        <jdbc.url>jdbc:postgresql://localhost/conference</jdbc.url>
+        <jdbc.user>conference_admin</jdbc.user>
+        <jdbc.password>conference_admin_password</jdbc.password>
+        <jdbc.driver>org.postgresql.Driver</jdbc.driver>
+    </properties>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <targetPath>public</targetPath>
+                <directory>public</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+              <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <configuration>
+                      <changeLogFile>
+                        liquibase/conference-room-master.xml
+                      </changeLogFile>
+                      <driver>${jdbc.driver}</driver>
+                      <url>${jdbc.url}</url>
+                      <username>${jdbc.user}</username>
+                      <password>${jdbc.password}</password>
+                </configuration>
+                <version>3.6.3</version>
+                <!-- License: Apache 2.0 -->
+              </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+        <!-- Database driver -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4.1209.jre7</version>
+            <!-- License: http://www.postgresql.org/about/licence/ -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.18.0</version>
+        </dependency>
+        <!-- logging TODO update version to latest possible
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>-->
+    </dependencies>
+</project>
