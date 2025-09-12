@@ -13,4 +13,16 @@
                 <sqlFile encoding="UTF-8" path="sql/rollback-user.sql" relativeToChangelogFile="true"/>
             </rollback>
         </changeSet>
+        <changeSet author="Aleksey Shishkin" id="initialize contacts">
+            <sqlFile encoding="UTF-8" path="sql/init-contact.sql" relativeToChangelogFile="true"/>
+            <rollback>
+                <sqlFile encoding="UTF-8" path="sql/rollback-contact.sql" relativeToChangelogFile="true"/>
+            </rollback>
+        </changeSet>
+        <changeSet author="Aleksey Shishkin" id="initialize chat">
+            <sqlFile encoding="UTF-8" path="sql/init-chat.sql" relativeToChangelogFile="true"/>
+            <rollback>
+                <sqlFile encoding="UTF-8" path="sql/rollback-chat.sql" relativeToChangelogFile="true"/>
+            </rollback>
+        </changeSet>
 </databaseChangeLog>

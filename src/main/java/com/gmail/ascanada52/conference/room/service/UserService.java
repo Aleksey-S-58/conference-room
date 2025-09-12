@@ -1,7 +1,11 @@
 package com.gmail.ascanada52.conference.room.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -79,9 +83,43 @@ public class UserService {
         user.ifPresent(u -> repository.deleteByLogin(u.getLogin()));
     }
 
+    public List<User> findByIdList(List<Integer> ids) {
+        return repository.findByIdIn(ids).stream()
+                .map(u -> map(u))
+                .collect(Collectors.toList());
+    }
+
+    public Optional<User> findById(Integer id) {
+        return repository.findById(id)
+                .map(u -> map(u));
+    }
+
+    public List<User> findByNameAndLogin(String name, String login) {
+        if (StringUtils.isAllBlank(name, login)) {
+            return new ArrayList<>();
+        }
+        if (StringUtils.isBlank(login)) {
+            return repository.findByNameLike(name).stream()
+                    .map(u -> map(u))
+                    .collect(Collectors.toList());
+        }
+        if (StringUtils.isBlank(name)) {
+            return repository.findByLoginLike(name).stream()
+                    .map(u -> map(u))
+                    .collect(Collectors.toList());
+        }
+        return repository.findByNameLikeAndLoginLike(name, login).stream()
+                .map(u -> map(u))
+                .collect(Collectors.toList());
+    }
+
     private User map(Optional<com.gmail.ascanada52.conference.room.entities.User> user) {
         return user
-                .map(u -> new User(u.getId(), u.getName(), u.getLogin(), "", u.getRole()))
+                .map(u -> map(u))
                 .get();
+    }
+
+    private User map(com.gmail.ascanada52.conference.room.entities.User u) {
+        return new User(u.getId(), u.getName(), u.getLogin(), "", u.getRole());
     }
 }

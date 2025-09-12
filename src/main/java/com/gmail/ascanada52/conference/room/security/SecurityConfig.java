@@ -15,7 +15,7 @@ public class SecurityConfig {
         return http.authorizeRequests()
                 .antMatchers("/actuator").hasAnyAuthority(Role.ADMIN.name())
                 .antMatchers("/accounts").hasAnyAuthority(Role.ADMIN.name())
-                .antMatchers("/user", "/message", "/invitation", "/contacts", "/conference")
+                .antMatchers("/user", "/message", "/attachment", "/invitation", "/contacts", "/conference", "/chat")
                     .hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
                 .antMatchers("/static/css/*.css").permitAll()
                 .antMatchers("/static/css/*.map").permitAll()
